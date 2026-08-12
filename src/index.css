@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #0066ff;
+    --primary-hover: #0052cc;
+    --primary-light: #e6f0ff;
+
+    /* Assistant UI 颜色变量 - Light Mode (官方默认主题) */
+    --aui-background: 0 0% 100%;
+    --aui-foreground: 240 10% 3.9%;
+    --aui-card: 0 0% 100%;
+    --aui-card-foreground: 240 10% 3.9%;
+    --aui-popover: 0 0% 100%;
+    --aui-popover-foreground: 240 10% 3.9%;
+    --aui-primary: 240 5.9% 10%;
+    --aui-primary-foreground: 0 0% 98%;
+    --aui-secondary: 240 4.8% 95.9%;
+    --aui-secondary-foreground: 240 5.9% 10%;
+    --aui-muted: 240 4.8% 95.9%;
+    --aui-muted-foreground: 240 3.8% 46.1%;
+    --aui-accent: 240 4.8% 95.9%;
+    --aui-accent-foreground: 240 5.9% 10%;
+    --aui-destructive: 0 84.2% 60.2%;
+    --aui-destructive-foreground: 0 0% 98%;
+    --aui-border: 240 5.9% 90%;
+    --aui-input: 240 5.9% 90%;
+    --aui-ring: 240 10% 3.9%;
+    --aui-radius: 0.5rem;
+    --aui-thread-max-width: 1200px; /* 设置合理的最大宽度 */
+
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #ffffff;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .dark {
+    /* Assistant UI 颜色变量 - Dark Mode (官方默认主题) */
+    --aui-background: 0 0% 7%;
+    --aui-foreground: 0 0% 98%;
+    --aui-card: 240 10% 3.9%;
+    --aui-card-foreground: 0 0% 98%;
+    --aui-popover: 240 10% 3.9%;
+    --aui-popover-foreground: 0 0% 98%;
+    --aui-primary: 0 0% 98%;
+    --aui-primary-foreground: 240 5.9% 10%;
+    --aui-secondary: 240 3.7% 15.9%;
+    --aui-secondary-foreground: 0 0% 98%;
+    --aui-muted: 240 3.7% 15.9%;
+    --aui-muted-foreground: 240 5% 64.9%;
+    --aui-accent: 240 3.7% 15.9%;
+    --aui-accent-foreground: 0 0% 98%;
+    --aui-destructive: 0 62.8% 30.6%;
+    --aui-destructive-foreground: 0 0% 98%;
+    --aui-border: 240 3.7% 15.9%;
+    --aui-input: 240 3.7% 15.9%;
+    --aui-ring: 240 4.9% 83.9%;
+  }
+
+  body {
+    @apply bg-gray-50 dark:bg-gray-950;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  /* 移除 Thread 组件的内边距限制 */
+  .aui-thread-viewport {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+@layer components {
+  /* 卡片样式 */
+  .card {
+    @apply bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-700;
+  }
+
+  /* 按钮样式 */
+  .btn-primary {
+    @apply bg-[#0066ff] hover:bg-[#0052cc] text-white font-medium shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-all duration-200;
+  }
+
+  /* 输入框样式 */
+  .input-field {
+    @apply bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 
+           focus:border-[#0066ff] dark:focus:border-[#0066ff] 
+           focus:ring-2 focus:ring-[#0066ff]/20
+           transition-all duration-200;
+  }
+
+  .input-sm {
+    @apply rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-xs text-gray-800 outline-none
+           focus:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100;
+  }
+
+  .chip {
+    @apply inline-flex items-center justify-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-[11px]
+           text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700;
+  }
+
+  .chip-active {
+    @apply border-blue-500 bg-blue-600 text-white hover:bg-blue-700 dark:border-blue-500 dark:bg-blue-600 dark:text-white;
+  }
+
+  /* 侧边栏项目 */
+  .sidebar-item {
+    @apply relative px-3 py-2.5 rounded-lg transition-all duration-150
+           text-gray-700 dark:text-gray-200
+           hover:bg-gray-100 dark:hover:bg-gray-800;
+  }
+
+  .sidebar-item-active {
+    @apply bg-[#0066ff] text-white hover:bg-[#0052cc];
+  }
+
+  /* 滚动条样式 */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700 rounded-full hover:bg-gray-400 dark:hover:bg-gray-600;
+  }
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Desktop Box content must never create a white horizontal scrollbar strip. */
+.desktop-box-scroll {
+  scrollbar-color: rgba(148, 163, 184, 0.55) transparent;
+  scrollbar-width: thin;
+}
+
+.desktop-box-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 0;
+}
+
+.desktop-box-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.desktop-box-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
+}
+
+.desktop-box-header-actions,
+.desktop-box-header-actions button {
+  pointer-events: auto !important;
+}
+
+/* Chat appearance: paragraph spacing */
+.chat-message-content p + p {
+  margin-top: var(--chat-paragraph-spacing, 0.5em);
+}
+
+.chat-message-content {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.chat-message-content :where(p, li, blockquote, td, th, a, code) {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.chat-message-content :where(pre) {
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.chat-message-content :where(pre code) {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.chat-message-content :where(table) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: normal;
+}

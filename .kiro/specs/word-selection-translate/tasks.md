@@ -1,0 +1,342 @@
+# Implementation Plan: Word Selection Translate (划词翻译)
+
+## Overview
+
+This implementation plan breaks down the word selection translate feature into discrete coding tasks. The feature enables users to translate selected text from any application using a global hotkey (Alt+W), with results displayed in a floating window near the cursor.
+
+The implementation leverages existing translation service infrastructure and adds new components for clipboard operations, cursor tracking, and floating window management. Tasks are organized to build incrementally, with early validation through tests and checkpoints.
+
+## Tasks
+
+- [ ] 1. Set up dependencies and project structure
+  - Add `arboard = "3.2"` to Cargo.toml for clipboard access
+  - Add `enigo = "0.1"` to Cargo.toml for keyboard simulation
+  - Add platform-specific dependencies (winapi for Windows, x11 for Linux, core-graphics for macOS)
+  - Create new Rust module files: `src-tauri/src/clipboard_operations.rs`, `src-tauri/src/cursor_position.rs`, `src-tauri/src/word_selection_translate.rs`
+  - Create new frontend component file: `src/tools/WordSelectionTranslateWindow.tsx`
+  - _Requirements: 1.1, 2.1, 4.1_
+
+- [ ] 2. Implement clipboard operations module
+  - [ ] 2.1 Create ClipboardOperations struct and initialization
+    - Implement `ClipboardOperations::new()` with error handling
+    - Define `ClipboardContent` enum (Text, Image, Empty)
+    - Initialize arboard Clipboard and enigo Enigo instances
+    - _Requirements: 2.1, 2.4_
+  - [ ] 2.2 Implement clipboard save and restore functions
+    - Write `save_clipboard()` to capture current clipboard content (text, image, or empty)
+    - Write `restore_clipboard()` to restore previously saved content
+    - Add timeout handling for clipboard operations (50ms target)
+    - Handle clipboard access errors gracefully
+    - _Requirements: 2.1, 2.4, 8.2_
+  - [ ] 2.3 Implement clipboard text capture via keyboard simulation
+    - Write `simulate_copy()` to send Ctrl+C key combination using enigo
+    - Write `read_clipboard_text()` with 500ms timeout
+    - Add 100ms wait after Ctrl+C before reading clipboard
+    - Handle special characters, line breaks, and Unicode text
+    - _Requirements: 2.2, 2.3, 2.6, 8.2_
+  - [ ]\* 2.4 Write unit tests for clipboard operations
+    - Test save and restore with text content
+    - Test save and restore with image content
+    - Test save and restore with empty clipboard
+    - Test simulate_copy() execution
+    - Test read_clipboard_text() timeout behavior
+    - Test error handling for inaccessible clipboard
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
+
+- [ ] 3. Implement cursor position tracking module
+  - [ ] 3.1 Create cursor position data structures
+    - Define `CursorPosition` struct with x, y coordinates
+    - Define `ScreenInfo` struct with width, height, x, y for multi-monitor support
+    - Add Serialize/Deserialize derives for Tauri communication
+    - _Requirements: 4.2, 4.3_
+  - [ ] 3.2 Implement platform-specific cursor position detection
+    - Write `get_cursor_position()` for Windows using GetCursorPos
+    - Write `get_cursor_position()` for Linux using X11/Wayland APIs
+    - Write `get_cursor_position()` for macOS using Core Graphics
+    - Write `get_screen_info()` to retrieve screen dimensions and position
+    - Handle multi-monitor scenarios correctly
+    - _Requirements: 4.2, 4.3, 4.4_
+  - [ ]\* 3.3 Write unit tests for cursor position tracking
+    - Test get_cursor_position() returns valid coordinates
+    - Test get_screen_info() returns valid dimensions
+    - Test multi-monitor scenarios
+    - _Requirements: 4.2, 4.3_
+
+- [ ] 4. Implement window positioning and management
+  - [ ] 4.1 Create window position calculation algorithm
+    - Write `calculate_window_position()` function
+    - Position window 20px offset from cursor by default
+    - Adjust position when window would extend beyond right screen edge
+    - Adjust position when window would extend beyond bottom screen edge
+    - Ensure window stays within left and top boundaries with 10px margin
+    - Handle multi-monitor positioning correctly
+    - _Requirements: 4.2, 4.3, 4.4_
+  - [ ] 4.2 Implement window creation and configuration
+    - Write `create_or_show_word_selection_window()` function
+    - Create frameless window with label "word-selection-translate"
+    - Configure window: 400x300 size, no decorations, always-on-top, skip-taskbar
+    - Set window position using calculated coordinates
+    - Reuse existing window if already created
+    - _Requirements: 4.1, 4.5, 4.6, 10.1, 10.2, 10.3_
+  - [ ]\* 4.3 Write unit tests for window positioning algorithm
+    - Test positioning near cursor (normal case)
+    - Test adjustment when window would go off right edge
+    - Test adjustment when window would go off bottom edge
+    - Test adjustment when window would go off left edge
+    - Test adjustment when window would go off top edge
+    - Test multi-monitor positioning
+    - Test with various window sizes and screen resolutions
+    - _Requirements: 4.2, 4.3, 4.4_
+
+- [ ] 5. Checkpoint - Ensure core modules compile and basic tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 6. Implement translation orchestrator
+  - [ ] 6.1 Create translation orchestrator data structures
+    - Define `WordSelectionTranslateSettings` struct with provider, languages, auto-copy, auto-close settings
+    - Define `TranslateEvent` TypeScript interface for frontend communication
+    - Add serialization support for Tauri events
+    - _Requirements: 3.1, 3.2, 3.3, 6.1, 6.2, 7.1, 7.2_
+  - [ ] 6.2 Implement main translation workflow orchestration
+    - Write `execute_word_selection_translate()` async function
+    - Step 1: Get cursor position using cursor_position module
+    - Step 2: Create/show window with loading state
+    - Step 3: Save clipboard using clipboard_operations module
+    - Step 4: Simulate Ctrl+C to copy selected text
+    - Step 5: Wait 100ms and read clipboard text
+    - Step 6: Restore original clipboard content
+    - Step 7: Validate text (not empty, not whitespace-only, max 5000 chars)
+    - Step 8: Call existing translate::translate() service
+    - Step 9: Emit success event to frontend with translation result
+    - Handle errors at each step with appropriate error messages
+    - _Requirements: 1.1, 2.1, 2.2, 2.3, 2.4, 3.1, 3.5, 3.6, 4.1, 4.8, 8.1, 8.2, 8.3, 9.1, 9.2, 9.3, 9.4, 9.5_
+  - [ ] 6.3 Implement error handling and recovery
+    - Handle clipboard operation failures with user-friendly messages
+    - Handle empty or whitespace-only text selection
+    - Handle translation service errors (network, API, rate limit)
+    - Ensure clipboard is always restored in finally block
+    - Log all errors for debugging
+    - _Requirements: 1.4, 2.5, 3.6, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6_
+  - [ ]\* 6.4 Write integration tests for translation orchestrator
+    - Test complete workflow with valid text
+    - Test workflow with empty text
+    - Test workflow with clipboard errors
+    - Test workflow with translation errors
+    - Test timing constraints (200ms window, 600ms clipboard)
+    - Test clipboard state preservation across operations
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 8.1, 8.2_
+
+- [ ] 7. Implement global hotkey registration
+  - [ ] 7.1 Add hotkey registration in main.rs
+    - Write `register_word_selection_translate_shortcut()` function
+    - Register Alt+W as default global shortcut on app startup
+    - Trigger `word_selection_translate()` when hotkey is pressed
+    - Handle hotkey registration errors (conflicts, invalid format)
+    - _Requirements: 1.1, 1.2, 1.5_
+  - [ ] 7.2 Implement hotkey configuration update command
+    - Write `update_word_selection_translate_shortcut` Tauri command
+    - Unregister old shortcut and register new shortcut
+    - Validate hotkey format before registration
+    - Return error if hotkey conflicts with system shortcuts
+    - _Requirements: 1.3, 1.5_
+  - [ ] 7.3 Wire hotkey trigger to translation orchestrator
+    - Implement `word_selection_translate()` function in main.rs
+    - Load settings from settings store
+    - Call `execute_word_selection_translate()` with app handle and settings
+    - Handle errors and display notifications
+    - _Requirements: 1.1, 6.1, 6.2, 7.1, 7.2_
+
+- [ ] 8. Implement frontend floating window component
+  - [ ] 8.1 Create WordSelectionTranslateWindow component structure
+    - Create `src/tools/WordSelectionTranslateWindow.tsx`
+    - Define `TranslateState` interface (loading, originalText, translatedText, fromLang, toLang, error)
+    - Set up component state management with useState
+    - _Requirements: 4.6, 4.8, 7.5_
+  - [ ] 8.2 Implement event listener for translation results
+    - Use Tauri listen() to receive 'word-selection-translate-result' events
+    - Update state when translation result is received
+    - Handle loading, success, and error event types
+    - Clean up event listener on component unmount
+    - _Requirements: 4.7, 4.8, 8.3_
+  - [ ] 8.3 Implement UI layout and styling
+    - Create compact layout with 400px max width
+    - Display original text section with label
+    - Display translated text section with label
+    - Add rounded corners (8px radius) and subtle shadow
+    - Support light and dark themes based on system preferences
+    - Use readable font size (14px minimum)
+    - Add appropriate padding and spacing
+    - Display loading indicator during translation
+    - _Requirements: 4.8, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7_
+  - [ ] 8.4 Implement action buttons (Copy, Speak, Close)
+    - Add Copy button that copies translated text to clipboard
+    - Show confirmation indicator for 1500ms after copy
+    - Add Speak button that uses Web Speech API to read translated text
+    - Add Close button that hides the window
+    - Style buttons with appropriate icons and hover states
+    - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
+  - [ ] 8.5 Implement keyboard and click interactions
+    - Add Escape key handler to close window
+    - Add Tab navigation between buttons
+    - Add Enter key handler to activate focused button
+    - Add click-outside handler to close window after 3 seconds
+    - _Requirements: 5.7, 5.8_
+  - [ ] 8.6 Add accessibility features
+    - Add ARIA labels for all buttons
+    - Add ARIA live region for translation results
+    - Add ARIA live region for error messages
+    - Ensure high contrast for text readability
+    - Test with screen reader
+    - _Requirements: 4.7, 5.1, 5.3, 5.5, 10.6_
+
+- [ ] 9. Checkpoint - Test end-to-end workflow manually
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 10. Integrate settings and configuration
+  - [ ] 10.1 Extend settings store with word selection translate settings
+    - Add `wordSelectionTranslateShortcut` setting (default: 'Alt+W')
+    - Add `wordSelectionTranslateProvider` setting (default: same as translateProvider)
+    - Add `wordSelectionTranslateFromLang` setting (default: 'auto')
+    - Add `wordSelectionTranslateToLang` setting (default: 'zh')
+    - Add `wordSelectionTranslateAutoCopy` setting (default: false)
+    - Add `wordSelectionTranslateAutoClose` setting (default: false)
+    - Add `wordSelectionTranslateAutoCloseDelay` setting (default: 3000ms)
+    - Persist settings to storage
+    - _Requirements: 1.3, 6.1, 6.2, 7.1, 7.2, 7.3, 7.4_
+  - [ ] 10.2 Create settings UI for word selection translate
+    - Add settings section in settings panel
+    - Add hotkey configuration input with validation
+    - Add translation provider dropdown
+    - Add source language dropdown (with "auto" option)
+    - Add target language dropdown
+    - Add auto-copy checkbox
+    - Add auto-close checkbox with delay input
+    - Display current hotkey and allow customization
+    - _Requirements: 1.3, 6.1, 6.2, 7.1, 7.2, 7.4_
+  - [ ] 10.3 Implement auto-copy and auto-close features
+    - In frontend component, check auto-copy setting after translation
+    - If auto-copy enabled, automatically copy translated text to clipboard
+    - Check auto-close setting after translation
+    - If auto-close enabled, start timer with configured delay
+    - Cancel auto-close timer if user interacts with window
+    - _Requirements: 5.2, 5.8, 7.4_
+  - [ ]\* 10.4 Write integration tests for settings
+    - Test hotkey configuration update
+    - Test provider configuration update
+    - Test language configuration update
+    - Test auto-copy setting
+    - Test auto-close setting
+    - _Requirements: 1.3, 6.1, 6.2, 7.1, 7.2, 7.4_
+
+- [ ] 11. Add routing and window initialization
+  - [ ] 11.1 Add route for word selection translate window
+    - Update `src/App.tsx` to add route for '/word-selection-translate' path
+    - Render WordSelectionTranslateWindow component for this route
+    - _Requirements: 4.1_
+  - [ ] 11.2 Configure window label and reuse logic
+    - Ensure window label "word-selection-translate" is used consistently
+    - Implement window reuse logic to prevent duplicate windows
+    - Test window reuse on subsequent hotkey presses
+    - _Requirements: 4.1, 8.5_
+
+- [ ] 12. Implement text validation and sanitization
+  - [ ] 12.1 Add text validation functions
+    - Write function to detect empty strings
+    - Write function to detect whitespace-only strings
+    - Write function to validate text length (max 5000 characters)
+    - Write function to handle special characters and Unicode
+    - _Requirements: 1.4, 2.6, 9.4_
+  - [ ]\* 12.2 Write unit tests for text validation
+    - Test empty string detection
+    - Test whitespace-only string detection
+    - Test text length validation
+    - Test special character handling
+    - Test Unicode character handling
+    - _Requirements: 1.4, 2.6, 9.4_
+
+- [ ] 13. Add error messages and localization
+  - [ ] 13.1 Define error message constants
+    - Create error message constants for all error scenarios
+    - Support Chinese and English error messages
+    - Include messages for: hotkey conflict, clipboard errors, no text selected, API errors, network errors, rate limits
+    - _Requirements: 1.4, 1.5, 2.5, 9.1, 9.2, 9.3, 9.4, 9.5_
+  - [ ] 13.2 Implement error display in frontend
+    - Display error messages in floating window with appropriate styling
+    - Show error icon and error text
+    - Keep window open for user to read error message
+    - Add retry button for recoverable errors
+    - _Requirements: 3.6, 9.1, 9.2, 9.3, 9.4, 9.5_
+
+- [ ] 14. Add performance monitoring and optimization
+  - [ ] 14.1 Add timing instrumentation
+    - Add timing logs for hotkey trigger to window display (<200ms target)
+    - Add timing logs for clipboard operations (<600ms target)
+    - Add timing logs for window positioning (<10ms target)
+    - Add timing logs for UI updates (<100ms target)
+    - _Requirements: 8.1, 8.2, 8.3_
+  - [ ]\* 14.2 Write performance tests
+    - Test window positioning performance (<10ms)
+    - Test clipboard save performance (<50ms)
+    - Test clipboard restore performance (<50ms)
+    - Test complete clipboard workflow (<600ms)
+    - Test window display latency (<200ms)
+    - _Requirements: 8.1, 8.2, 8.3_
+  - [ ] 14.3 Implement concurrent request handling
+    - Cancel previous translation request when new request is triggered
+    - Prevent race conditions in window state updates
+    - Test rapid hotkey presses
+    - _Requirements: 8.5_
+
+- [ ] 15. Final integration and testing
+  - [ ] 15.1 Test complete workflow with all translation providers
+    - Test with Baidu translation service
+    - Test with Google translation service
+    - Test with Bing translation service
+    - Test with Tencent translation service
+    - Test with ChatGPT translation service
+    - Test with Gemini translation service
+    - Verify API credential validation for each provider
+    - _Requirements: 3.2, 3.6, 6.4, 6.5_
+  - [ ] 15.2 Test with different language pairs
+    - Test auto-detect source language
+    - Test Chinese to English translation
+    - Test English to Chinese translation
+    - Test Japanese to Chinese translation
+    - Test Korean to English translation
+    - Test with all supported languages (zh, en, ja, ko, fr, de, es, ru, ar, pt, it)
+    - _Requirements: 3.4, 7.3, 7.5_
+  - [ ] 15.3 Test edge cases and error scenarios
+    - Test with no text selected
+    - Test with empty or whitespace-only text
+    - Test with very long text (5000+ characters)
+    - Test with special characters and emojis
+    - Test with multi-line text
+    - Test with mixed language text
+    - Test with clipboard locked by another application
+    - Test with network disconnected
+    - Test with invalid API credentials
+    - Test with API rate limit exceeded
+    - _Requirements: 1.4, 2.5, 2.6, 3.6, 9.1, 9.2, 9.3, 9.4, 9.5_
+  - [ ]\* 15.4 Write end-to-end integration tests
+    - Test hotkey trigger → clipboard capture → translation → display
+    - Test clipboard state preservation
+    - Test window positioning on different monitors
+    - Test window boundary detection
+    - Test user interactions (copy, speak, close)
+    - Test settings changes take effect
+    - _Requirements: 1.1, 2.1, 2.2, 2.3, 2.4, 3.1, 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.5, 5.6, 5.7, 5.8_
+
+- [ ] 16. Final checkpoint - Complete testing and validation
+  - Ensure all tests pass, ask the user if questions arise.
+
+## Notes
+
+- Tasks marked with `*` are optional and can be skipped for faster MVP
+- Each task references specific requirements for traceability
+- Checkpoints ensure incremental validation at key milestones
+- The implementation reuses existing translation service infrastructure
+- Platform-specific code (cursor position tracking) requires conditional compilation
+- Performance targets: <200ms window display, <600ms clipboard operations
+- All clipboard operations must preserve original clipboard state
+- Window positioning must handle multi-monitor setups and screen boundaries
+- Error handling must be comprehensive with user-friendly messages

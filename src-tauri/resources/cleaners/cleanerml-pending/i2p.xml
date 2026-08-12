@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    BleachBit
+    Copyright (C) 2008-2019 Andrew Ziem
+    https://www.bleachbit.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    @app I2P
+    @url http://www.i2p-projekt.de/en/
+    @os Windows, Linux
+    @cleanerversion v0.4.5
+    @cleanerdate 2019-03-14
+    @cleanerby https://github.com/Tobias-B-Besemer
+    @tested ok v0.9.38, Windows 7
+    @testeddate 2019-03-10 (... with an old version of the cleaner!)
+    @testedby https://github.com/Tobias-B-Besemer
+    @note No Linux Support here, yet! Will do this later! Tobias.
+
+-->
+<cleaner id="i2p" os="windows">
+  <label>I2P</label>
+  <description>Network layer client</description>
+  <var name="profile">
+    <value search="glob" os="windows">%AppData%\I2P</value>
+    <!-- No Linux Support here, yet! Will do this later! Tobias.
+    -> Don't forget to remove os="windows"!
+    <value search="glob" os="linux">~/.i2p</value>
+    -->
+  </var>
+  <var name="temp-folder">
+    <value search="glob" os="windows">%Temp%</value>
+    <!-- No Linux Support here, yet! Will do this later! Tobias.
+    -> Don't forget to remove os="windows"!
+    <value search="glob" os="linux">~/.temp</value>
+    -->
+  </var>
+  <option id="logs">
+    <label>Logs</label>
+    <description>Delete the logs</description>
+    <action command="delete" search="walk.files" path="$$profile$$\logs\"/>
+    <action command="delete" search="file" path="$$profile$$\eventlog.txt"/>
+    <action command="delete" search="file" path="$$profile$$\wrapper.log"/>
+    <action command="delete" search="file" path="$$profile$$\addressbook\log.txt"/>
+  </option>
+  <option id="temp">
+    <label>Temporary files</label>
+    <description>Delete the temporary files</description>
+    <action command="delete" search="glob" path="$$temp-folder$$\i2p-*"/>
+  </option>
+</cleaner>

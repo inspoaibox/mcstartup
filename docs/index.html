@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="McStartUP - 简洁高效的 Windows 快速启动工具，支持 Win+R 快捷启动、拖拽添加、多视图模式"
+    />
+    <meta name="keywords" content="Windows启动器,快速启动,Win+R,应用管理,效率工具" />
+    <title>McStartUP - Windows 快速启动管理器</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <div class="logo">M</div>
+          <span class="brand-name">McStartUP</span>
+        </div>
+        <div class="nav-links">
+          <a href="#features">功能特性</a>
+          <a href="#screenshots">界面预览</a>
+          <a href="script-guide.html">脚本指南</a>
+          <a href="#download">立即下载</a>
+          <a href="https://github.com/inspoaibox/mcstartup" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 主横幅 -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">McStartUP</h1>
+          <p class="hero-subtitle">简洁高效的 Windows 快速启动管理器</p>
+          <p class="hero-description">
+            一键启动常用应用、网址、文件夹和脚本<br />
+            支持 Win+R 快捷方式，让效率触手可及
+          </p>
+          <div class="hero-buttons">
+            <a href="#download" class="btn btn-primary">立即下载</a>
+            <a
+              href="https://github.com/inspoaibox/mcstartup"
+              class="btn btn-secondary"
+              target="_blank"
+              >查看源码</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 功能特性 -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">核心功能</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Win+R 快速启动</h3>
+            <p>为每个应用设置别名，按 Win+R 输入别名即可快速启动，无需记住复杂路径</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>拖拽即添加</h3>
+            <p>支持拖拽 .exe、.lnk、文件夹到窗口，自动识别并预填充信息，添加应用从未如此简单</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📁</div>
+            <h3>多类型支持</h3>
+            <p>支持应用程序、网址、文件夹和脚本，统一管理所有常用资源</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📜</div>
+            <h3>脚本执行</h3>
+            <p>支持 .bat/.ps1/.ahk 脚本，可直接输入脚本内容或选择文件，一键执行自动化任务</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>分组管理</h3>
+            <p>自定义分组和颜色标签，支持拖拽排序，让你的启动项井井有条</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👁️</div>
+            <h3>多视图模式</h3>
+            <p>网格、列表、紧凑三种视图自由切换，适应不同使用场景和个人偏好</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>系统集成</h3>
+            <p>支持开机自启、系统托盘、右键菜单集成，深度融入 Windows 工作流</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 脚本功能详解 -->
+    <section
+      class="script-features"
+      style="
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 80px 0;
+        color: white;
+      "
+    >
+      <div class="container">
+        <h2 class="section-title" style="color: white; margin-bottom: 20px">强大的脚本功能</h2>
+        <p style="text-align: center; font-size: 18px; margin-bottom: 60px; opacity: 0.9">
+          让自动化任务触手可及，提升工作效率
+        </p>
+        <div class="features-grid">
+          <div
+            class="feature-card"
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <div class="feature-icon" style="font-size: 48px">📝</div>
+            <h3 style="color: white">两种输入方式</h3>
+            <p style="color: rgba(255, 255, 255, 0.9)">
+              <strong>文件路径模式：</strong>选择已有脚本文件<br />
+              <strong>直接输入模式：</strong>在界面中直接编写脚本内容
+            </p>
+          </div>
+          <div
+            class="feature-card"
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <div class="feature-icon" style="font-size: 48px">🔧</div>
+            <h3 style="color: white">三种脚本语言</h3>
+            <p style="color: rgba(255, 255, 255, 0.9)">
+              <strong>批处理 (.bat)：</strong>简单快速的系统命令<br />
+              <strong>PowerShell (.ps1)：</strong>强大的自动化脚本<br />
+              <strong>AutoHotkey (.ahk)：</strong>键盘鼠标自动化
+            </p>
+          </div>
+          <div
+            class="feature-card"
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <div class="feature-icon" style="font-size: 48px">⚡</div>
+            <h3 style="color: white">灵活的执行选项</h3>
+            <p style="color: rgba(255, 255, 255, 0.9)">
+              • 显示/隐藏执行窗口<br />
+              • 以管理员权限运行<br />
+              • 自定义工作目录<br />
+              • 传递命令行参数
+            </p>
+          </div>
+        </div>
+        <div
+          style="
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+          "
+        >
+          <h3 style="color: white; margin-bottom: 30px; text-align: center; font-size: 24px">
+            脚本应用示例
+          </h3>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+              gap: 24px;
+            "
+          >
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">🗂️ 系统清理</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                一键清理临时文件、回收站、浏览器缓存，释放磁盘空间
+              </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">📊 系统信息</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                快速查看 CPU、内存、磁盘使用情况，网络连接状态
+              </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">🔄 自动备份</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                定时备份重要文件到指定位置，支持增量备份和压缩
+              </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">🌐 网络诊断</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                检测网络连接、DNS 解析、ping 测试，快速定位网络问题
+              </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">🚀 开发环境</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                一键启动数据库、启动服务、编译项目，快速进入开发状态
+              </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.2); padding: 24px; border-radius: 12px">
+              <h4 style="color: #ffd700; margin-bottom: 12px">⌨️ 快捷键增强</h4>
+              <p style="color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.6">
+                使用 AutoHotkey 创建自定义快捷键，提升操作效率
+              </p>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px">
+          <a
+            href="script-guide.html"
+            class="btn btn-primary"
+            style="background: white; color: #667eea; border: 2px solid white"
+          >
+            查看完整脚本使用指南 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 界面预览 -->
+    <section id="screenshots" class="screenshots">
+      <div class="container">
+        <h2 class="section-title">界面预览</h2>
+        <div class="screenshot-grid">
+          <div class="screenshot-item">
+            <img
+              src="images/软件主界面.png"
+              alt="软件主界面 - 网格视图"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px"
+            />
+          </div>
+          <div class="screenshot-item">
+            <img
+              src="images/添加项目页面.png"
+              alt="添加项目 - 智能识别"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px"
+            />
+          </div>
+          <div class="screenshot-item">
+            <img
+              src="images/新建分组界面.png"
+              alt="分组管理 - 拖拽排序"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px"
+            />
+          </div>
+        </div>
+
+        <!-- 额外截图展示 -->
+        <div class="screenshot-grid" style="margin-top: 24px">
+          <div class="screenshot-item">
+            <img
+              src="images/紧凑式布局.png"
+              alt="紧凑式布局视图"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px"
+            />
+          </div>
+          <div class="screenshot-item">
+            <img
+              src="images/系统设置.png"
+              alt="系统设置页面"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 使用场景 -->
+    <section class="use-cases">
+      <div class="container">
+        <h2 class="section-title">适用场景</h2>
+        <div class="use-cases-grid">
+          <div class="use-case">
+            <h3>💼 办公效率</h3>
+            <p>快速启动 Office、邮件客户端、项目管理工具，一键进入工作状态</p>
+          </div>
+          <div class="use-case">
+            <h3>👨‍💻 开发者</h3>
+            <p>管理 IDE、终端、数据库工具、API 测试工具，开发环境一键就绪</p>
+          </div>
+          <div class="use-case">
+            <h3>🎮 游戏玩家</h3>
+            <p>整理游戏库、游戏平台、语音工具，快速切换游戏模式</p>
+          </div>
+          <div class="use-case">
+            <h3>🎨 设计师</h3>
+            <p>管理 PS、AI、Figma 等设计工具，项目文件夹快速访问</p>
+          </div>
+          <div class="use-case">
+            <h3>🤖 自动化任务</h3>
+            <p>创建批处理、PowerShell、AutoHotkey 脚本，一键执行备份、清理、部署等任务</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="download">
+      <div class="container">
+        <h2 class="section-title">立即下载</h2>
+        <div class="download-content">
+          <div class="download-info">
+            <h3>Windows 10/11</h3>
+            <p class="version">最新版本: v1.0.0</p>
+            <p class="file-size">文件大小: ~5MB</p>
+            <a
+              href="https://github.com/inspoaibox/mcstartup/releases/latest"
+              class="btn btn-primary btn-large"
+            >
+              下载 McStartUP
+            </a>
+            <p class="download-note">开源免费 · 无广告 · 无需安装运行时</p>
+          </div>
+          <div class="system-requirements">
+            <h4>系统要求</h4>
+            <ul>
+              <li>Windows 10 或更高版本</li>
+              <li>64 位操作系统</li>
+              <li>约 50MB 可用磁盘空间</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">M</div>
+            <span>McStartUP</span>
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/inspoaibox/mcstartup" target="_blank">GitHub</a>
+            <a href="https://github.com/inspoaibox/mcstartup/issues" target="_blank">问题反馈</a>
+            <a href="https://github.com/inspoaibox/mcstartup/blob/main/LICENSE" target="_blank"
+              >开源协议</a
+            >
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 McStartUP. 基于 MIT 协议开源</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

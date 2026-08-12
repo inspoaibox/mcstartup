@@ -1,0 +1,106 @@
+{
+  "build": {
+    "beforeBuildCommand": "npm run build:shell-extension:release && npm run build",
+    "devPath": "http://127.0.0.1:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
+  },
+  "package": {
+    "productName": "McStartUP",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "protocol": {
+        "asset": true,
+        "assetScope": ["**", "$APPDATA/McStartUP/**"]
+      },
+      "dialog": {
+        "all": false,
+        "open": true,
+        "message": true,
+        "ask": true,
+        "confirm": true,
+        "save": true
+      },
+      "fs": {
+        "all": false,
+        "readFile": true,
+        "writeFile": true,
+        "scope": ["**"]
+      },
+      "window": {
+        "all": true
+      },
+      "globalShortcut": {
+        "all": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.mcstartup.app",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "resources": [
+        "resources/7zip/**/*",
+        "resources/mpv/**/*",
+        "resources/ffmpeg/**/*",
+        "resources/wechat-ocr/**/*",
+        "resources/paddle-ocr/**/*",
+        "resources/wps-ocr/**/*",
+        "resources/McStartUPDesktopBox*.dll",
+        "resources/McStartUPDesktopIconFilter*.dll"
+      ],
+      "windows": {
+        "wix": {
+          "componentRefs": [],
+          "fragmentPaths": [],
+          "language": "zh-CN",
+          "template": null
+        },
+        "nsis": {
+          "installMode": "currentUser",
+          "languages": ["SimpChinese"],
+          "displayLanguageSelector": false,
+          "template": "./nsis-installer.nsi"
+        }
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "decorations": true,
+        "title": "McStartUP",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "center": true,
+        "fileDropEnabled": true,
+        "label": "main",
+        "visible": false
+      }
+    ],
+    "systemTray": {
+      "iconPath": "icons/icon.ico",
+      "iconAsTemplate": false,
+      "menuOnLeftClick": false,
+      "title": "McStartUP"
+    }
+  }
+}

@@ -1,0 +1,113 @@
+[package]
+name = "mcstartup"
+version = "0.1.0"
+description = "A modern Windows quick launcher tool"
+authors = ["you"]
+license = ""
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "dialog-save", "fs-write-file", "fs-read-file", "protocol-asset", "dialog-message", "dialog-confirm", "dialog-ask", "dialog-open", "shell-open", "system-tray", "window-all", "global-shortcut-all", "notification"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.7", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+winreg = "0.52"
+anyhow = "1.0"
+encoding_rs = "0.8"
+lnk = "0.5"
+base64 = "0.22"
+libloading = "0.8"
+edgefirst-tflite = "0.7.0"
+everything-ipc = "0.1"
+reqwest = { version = "0.11", features = ["json", "blocking", "gzip", "deflate", "stream"] }
+feed-rs = "2"
+scraper = "0.24"
+futures-util = "0.3"
+async-trait = "0.1"
+rusqlite = { version = "0.31", features = ["bundled"] }
+postgres = { version = "0.19.13", features = ["with-serde_json-1", "with-chrono-0_4"] }
+mysql = { version = "28.0.0", default-features = false, features = ["minimal-rust", "derive", "buffer-pool", "chrono"] }
+redis = "1.2.1"
+mongodb = { version = "3.6.0", features = ["sync"] }
+clipboard-win = "5.3"
+arboard = "3.2"
+enigo = "0.1"
+image = "0.25"
+oxipng = { version = "9", default-features = false, features = ["parallel"] }
+kamadak-exif = "0.5"
+auto-palette = "0.5"
+rqrr = "0.7"
+screenshots = "0.8"
+sha2 = "0.10"
+sha1 = "0.10"
+hmac = "0.12"
+hex = "0.4"
+md5 = "0.7"
+rand = "0.8"
+urlencoding = "2.1"
+dirs = "5.0"
+winapi = { version = "0.3", features = ["synchapi", "winerror", "handleapi", "errhandlingapi", "winuser", "minwindef", "processthreadsapi", "securitybaseapi", "tlhelp32", "winnt", "oaidl", "restartmanager", "dpapi", "winbase", "wincrypt", "commctrl", "memoryapi", "winreg"] }
+surge-ping = "0.8"
+tokio = { version = "1", features = ["full"] }
+trust-dns-resolver = "0.23"
+local-ip-address = "0.6"
+ort = "2.0.0-rc.12"
+ndarray = "0.17"
+paddle-ocr-rs = { path = "vendor/paddle-ocr-rs", default-features = false }
+tokenizers = { version = "0.19", default-features = false, features = ["onig"] }
+calamine = "0.34.0"
+rust_xlsxwriter = "0.94.0"
+indexmap = "2.14.0"
+csv = "1.4.0"
+fast_image_resize = { version = "5.2", features = ["rayon"] }
+hora = "0.1.1"
+imageproc = "0.25"
+ab_glyph = "0.2"
+rayon = "1.10"
+zip = "0.6"
+regex = "1"
+aes-gcm = "0.10"
+rodio = { version = "0.22.2", default-features = false, features = ["playback", "symphonia-all"] }
+
+[target.'cfg(windows)'.dependencies]
+# Tauri 1.x exposes its Windows parent-window API with the windows 0.39 HWND
+# type. Keep this alias alongside the application's windows 0.52 dependency so
+# Box windows can be created as Explorer children instead of reparented later.
+windows_039 = { package = "windows", version = "0.39.0", features = ["Win32_Foundation"] }
+windows = { version = "0.52", features = [
+    "implement",
+    "Win32_Foundation",
+    "Win32_Graphics_Dwm",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_Common",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Registry",
+    "Win32_UI_Accessibility",
+    "Win32_System_Com",
+    "Win32_System_Com_StructuredStorage",
+    "Win32_System_DataExchange",
+    "Win32_System_Memory",
+    "Win32_System_Ole",
+    "Win32_System_SystemServices",
+    "Win32_System_Variant",
+    "Win32_Storage_FileSystem",
+    "Win32_UI_Input_KeyboardAndMouse",
+] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "z"
+strip = true

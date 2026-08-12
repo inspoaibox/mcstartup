@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="McStartUP 脚本功能使用指南 - 详细介绍如何使用批处理、PowerShell、AutoHotkey 脚本"
+    />
+    <title>脚本功能使用指南 - McStartUP</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .guide-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .guide-header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding-top: 80px;
+      }
+      .guide-header h1 {
+        font-size: 48px;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .guide-section {
+        margin-bottom: 60px;
+      }
+      .guide-section h2 {
+        font-size: 32px;
+        margin-bottom: 24px;
+        color: #2d3748;
+        border-left: 4px solid #667eea;
+        padding-left: 16px;
+      }
+      .guide-section h3 {
+        font-size: 24px;
+        margin: 32px 0 16px;
+        color: #4a5568;
+      }
+      .guide-section p {
+        line-height: 1.8;
+        color: #4a5568;
+        margin-bottom: 16px;
+      }
+      .code-block {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 24px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 16px 0;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .code-block pre {
+        margin: 0;
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+      }
+      .feature-list li {
+        padding: 12px 0;
+        padding-left: 32px;
+        position: relative;
+        color: #4a5568;
+      }
+      .feature-list li:before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #667eea;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .example-card {
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        margin: 24px 0;
+      }
+      .example-card h4 {
+        color: #2d3748;
+        margin-bottom: 12px;
+        font-size: 20px;
+      }
+      .example-card .meta {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        font-size: 14px;
+        color: #718096;
+      }
+      .example-card .meta span {
+        background: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+      }
+      .tip-box {
+        background: #ebf8ff;
+        border-left: 4px solid #4299e1;
+        padding: 16px 20px;
+        margin: 24px 0;
+        border-radius: 4px;
+      }
+      .tip-box strong {
+        color: #2c5282;
+      }
+      .warning-box {
+        background: #fffaf0;
+        border-left: 4px solid #ed8936;
+        padding: 16px 20px;
+        margin: 24px 0;
+        border-radius: 4px;
+      }
+      .warning-box strong {
+        color: #c05621;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <div class="logo">M</div>
+          <span class="brand-name">McStartUP</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="index.html#features">功能特性</a>
+          <a href="index.html#download">立即下载</a>
+          <a href="https://github.com/inspoaibox/mcstartup" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="guide-container">
+      <!-- 标题 -->
+      <div class="guide-header">
+        <h1>📜 脚本功能使用指南</h1>
+        <p style="font-size: 18px; color: #718096">让自动化任务触手可及</p>
+      </div>
+
+      <!-- 概述 -->
+      <div class="guide-section">
+        <h2>✨ 功能概述</h2>
+        <p>
+          McStartUP
+          的脚本功能让您可以快速执行各种自动化任务。无论是系统清理、文件备份、网络诊断，还是开发环境配置，都可以通过简单的脚本实现一键执行。
+        </p>
+        <ul class="feature-list">
+          <li>支持批处理 (.bat)、PowerShell (.ps1)、AutoHotkey (.ahk) 三种脚本语言</li>
+          <li>两种输入方式：选择脚本文件或直接输入脚本内容</li>
+          <li>灵活的执行选项：显示/隐藏窗口、管理员权限、自定义工作目录</li>
+          <li>通过 Win+R 快捷启动，无需打开软件</li>
+        </ul>
+      </div>
+
+      <!-- 添加脚本 -->
+      <div class="guide-section">
+        <h2>📝 如何添加脚本</h2>
+
+        <h3>方式一：选择脚本文件</h3>
+        <p>如果您已经有编写好的脚本文件：</p>
+        <ol style="line-height: 2; color: #4a5568">
+          <li>点击"添加新项目"按钮</li>
+          <li>选择"脚本"类型</li>
+          <li>在输入模式中选择"📁 文件路径"</li>
+          <li>点击浏览按钮，选择您的脚本文件（.cmd/.bat/.ps1/.ahk）</li>
+          <li>设置别名（用于 Win+R 快速启动）</li>
+          <li>配置执行选项（显示窗口、管理员权限等）</li>
+          <li>点击"添加项目"完成</li>
+        </ol>
+
+        <h3>方式二：直接输入脚本内容 ⭐</h3>
+        <p>无需创建文件，直接在界面中编写脚本：</p>
+        <ol style="line-height: 2; color: #4a5568">
+          <li>点击"添加新项目"按钮</li>
+          <li>选择"脚本"类型</li>
+          <li>在输入模式中选择"✏️ 直接输入"</li>
+          <li>选择脚本语言（批处理/PowerShell/AutoHotkey）</li>
+          <li>在文本框中输入脚本内容</li>
+          <li>设置别名和执行选项</li>
+          <li>点击"添加项目"完成</li>
+        </ol>
+
+        <div class="tip-box">
+          <strong>💡 提示：</strong>
+          直接输入模式下，脚本内容会保存在配置文件中，执行时自动创建临时文件。这样可以方便地管理和分享脚本。
+        </div>
+      </div>
+
+      <!-- 脚本示例 -->
+      <div class="guide-section">
+        <h2>📚 脚本示例</h2>
+
+        <!-- 示例 1 -->
+        <div class="example-card">
+          <h4>🗂️ 系统清理脚本</h4>
+          <div class="meta">
+            <span>类型：PowerShell</span>
+            <span>别名：cleanup</span>
+            <span>管理员：是</span>
+          </div>
+          <p>一键清理系统临时文件，释放磁盘空间：</p>
+          <div class="code-block">
+            <pre>
+# 清理临时文件
+Write-Host "开始清理临时文件..." -ForegroundColor Green
+
+$tempPaths = @(
+    $env:TEMP,
+    "C:\Windows\Temp"
+)
+
+$totalSize = 0
+foreach ($path in $tempPaths) {
+    if (Test-Path $path) {
+        $files = Get-ChildItem $path -Recurse -Force -ErrorAction SilentlyContinue
+        $size = ($files | Measure-Object -Property Length -Sum).Sum / 1MB
+        $totalSize += $size
+        Write-Host "清理 $path (约 $([math]::Round($size, 2)) MB)"
+        Remove-Item "$path\*" -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
+Write-Host "清理完成！释放约 $([math]::Round($totalSize, 2)) MB 空间" -ForegroundColor Green
+pause</pre
+            >
+          </div>
+        </div>
+
+        <!-- 示例 2 -->
+        <div class="example-card">
+          <h4>📊 系统信息查看</h4>
+          <div class="meta">
+            <span>类型：批处理</span>
+            <span>别名：sysinfo</span>
+            <span>管理员：否</span>
+          </div>
+          <p>快速查看系统基本信息：</p>
+          <div class="code-block">
+            <pre>
+@echo off
+chcp 65001 >nul
+echo ========================================
+echo 系统信息
+echo ========================================
+echo.
+echo 计算机名: %COMPUTERNAME%
+echo 用户名: %USERNAME%
+echo 系统: %OS%
+echo 当前时间: %date% %time%
+echo.
+systeminfo | findstr /C:"OS 名称" /C:"OS 版本" /C:"系统类型" /C:"物理内存总量"
+echo.
+pause</pre
+            >
+          </div>
+        </div>
+
+        <!-- 示例 3 -->
+        <div class="example-card">
+          <h4>🌐 网络诊断工具</h4>
+          <div class="meta">
+            <span>类型：批处理</span>
+            <span>别名：netcheck</span>
+            <span>管理员：否</span>
+          </div>
+          <p>检测网络连接状态和 DNS 解析：</p>
+          <div class="code-block">
+            <pre>
+@echo off
+chcp 65001 >nul
+echo ========================================
+echo 网络诊断工具
+echo ========================================
+echo.
+echo 正在检测网络连接...
+echo.
+
+echo [1] 本地网络配置：
+ipconfig | findstr /C:"IPv4" /C:"子网掩码" /C:"默认网关"
+echo.
+
+echo [2] DNS 解析测试：
+nslookup www.baidu.com
+echo.
+
+echo [3] 网络连通性测试：
+ping -n 4 www.baidu.com
+echo.
+
+echo 诊断完成！
+pause</pre
+            >
+          </div>
+        </div>
+
+        <!-- 示例 4 -->
+        <div class="example-card">
+          <h4>📁 快速打开文件夹</h4>
+          <div class="meta">
+            <span>类型：批处理</span>
+            <span>别名：folders</span>
+            <span>管理员：否</span>
+          </div>
+          <p>交互式选择并打开常用文件夹：</p>
+          <div class="code-block">
+            <pre>
+@echo off
+echo 选择要打开的文件夹：
+echo.
+echo 1. 下载文件夹
+echo 2. 文档文件夹
+echo 3. 桌面
+echo 4. 图片文件夹
+echo 5. 退出
+echo.
+set /p choice=请输入选项 (1-5): 
+
+if "%choice%"=="1" start "" "%USERPROFILE%\Downloads"
+if "%choice%"=="2" start "" "%USERPROFILE%\Documents"
+if "%choice%"=="3" start "" "%USERPROFILE%\Desktop"
+if "%choice%"=="4" start "" "%USERPROFILE%\Pictures"</pre
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- 执行选项 -->
+      <div class="guide-section">
+        <h2>⚙️ 执行选项说明</h2>
+
+        <h3>显示执行窗口</h3>
+        <p>
+          <strong>勾选：</strong
+          >脚本执行时会显示命令行窗口，可以看到输出信息和执行进度。适合需要查看输出或交互的脚本。<br />
+          <strong>不勾选：</strong>脚本在后台静默执行，不显示窗口。适合不需要交互的自动化任务。
+        </p>
+
+        <h3>以管理员身份运行</h3>
+        <p>
+          某些操作需要管理员权限（如清理系统文件、修改注册表等）。勾选此选项后，脚本会以管理员权限执行，系统会弹出
+          UAC 提示。
+        </p>
+
+        <h3>脚本参数</h3>
+        <p>可以为脚本传递命令行参数。例如，如果脚本需要接收文件路径作为参数，可以在此输入。</p>
+
+        <h3>工作目录</h3>
+        <p>
+          设置脚本执行时的当前工作目录。如果不设置，默认使用脚本所在目录（文件模式）或临时目录（直接输入模式）。
+        </p>
+      </div>
+
+      <!-- 注意事项 -->
+      <div class="guide-section">
+        <h2>⚠️ 注意事项</h2>
+
+        <div class="warning-box">
+          <strong>安全提示：</strong>
+          <ul style="margin: 8px 0 0 0; padding-left: 20px">
+            <li>请确保脚本内容来自可信来源</li>
+            <li>不要执行不明来源的脚本</li>
+            <li>使用管理员权限时要特别小心</li>
+          </ul>
+        </div>
+
+        <h3>PowerShell 执行策略</h3>
+        <p>
+          McStartUP 会自动使用 <code>-ExecutionPolicy Bypass</code> 参数执行 PowerShell
+          脚本，无需手动修改系统执行策略。
+        </p>
+
+        <h3>AutoHotkey 支持</h3>
+        <p>执行 .ahk 脚本需要系统已安装 AutoHotkey。软件会自动查找以下位置：</p>
+        <ul style="line-height: 1.8; color: #4a5568">
+          <li>C:\Program Files\AutoHotkey\AutoHotkey.exe</li>
+          <li>C:\Program Files\AutoHotkey\v2\AutoHotkey.exe</li>
+          <li>C:\Program Files (x86)\AutoHotkey\AutoHotkey.exe</li>
+          <li>注册表中的安装路径</li>
+        </ul>
+        <p>
+          如果未找到 AutoHotkey，执行时会提示安装。下载地址：<a
+            href="https://www.autohotkey.com"
+            target="_blank"
+            >https://www.autohotkey.com</a
+          >
+        </p>
+
+        <h3>临时文件管理</h3>
+        <p>
+          使用"直接输入"模式时，脚本会保存到
+          <code>%TEMP%\McStartUP\</code>
+          目录。临时文件在脚本执行期间不会被删除，确保脚本正常运行。系统会在清理临时目录时自动删除这些文件。
+        </p>
+      </div>
+
+      <!-- 高级技巧 -->
+      <div class="guide-section">
+        <h2>🚀 高级技巧</h2>
+
+        <h3>1. 组合使用多个脚本</h3>
+        <p>可以创建一个主脚本，通过 Win+R 调用其他脚本，实现复杂的自动化流程。</p>
+
+        <h3>2. 使用环境变量</h3>
+        <p>在脚本中使用环境变量（如 %USERPROFILE%、%TEMP%）可以让脚本在不同电脑上通用。</p>
+
+        <h3>3. 错误处理</h3>
+        <p>在脚本中添加错误处理逻辑，确保脚本执行失败时能给出明确提示。</p>
+
+        <h3>4. 日志记录</h3>
+        <p>对于重要的自动化任务，建议在脚本中添加日志记录功能，方便排查问题。</p>
+      </div>
+
+      <!-- 返回首页 -->
+      <div
+        style="text-align: center; margin-top: 80px; padding: 40px 0; border-top: 1px solid #e2e8f0"
+      >
+        <a href="index.html" class="btn btn-primary">返回首页</a>
+        <a href="index.html#download" class="btn btn-secondary" style="margin-left: 16px"
+          >立即下载</a
+        >
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">M</div>
+            <span>McStartUP</span>
+          </div>
+          <div class="footer-links">
+            <a href="https://github.com/inspoaibox/mcstartup" target="_blank">GitHub</a>
+            <a href="https://github.com/inspoaibox/mcstartup/issues" target="_blank">问题反馈</a>
+            <a href="https://github.com/inspoaibox/mcstartup/blob/main/LICENSE" target="_blank"
+              >开源协议</a
+            >
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 McStartUP. 基于 MIT 协议开源</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

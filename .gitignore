@@ -1,0 +1,60 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+
+# 临时文件
+tmp/
+
+# 提取/分析文件
+extracted_ocr_translate_screenshot_4.1.8.67/
+
+
+
+node_modules
+dist
+dist-ssr
+build/
+target/
+src-tauri/target/
+src-tauri/target-check-temp/
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Tauri
+src-tauri/target
+src-tauri/Cargo.lock
+
+# Build artifacts
+*.exe
+*.msi
+*.dmg
+*.deb
+*.AppImage
+
+# Data files
+*.db
+*.sqlite
+config.json
+backup/
+extracted_ocr_translate_screenshot_4.1.8.67/
+src-tauri/resources/ffmpeg/ffmpeg-runtime.7z
+src-tauri/resources/McStartUPDesktopBox*.dll
+src-tauri/shell-extension/Cargo.lock
+src-tauri/resources/McStartUPDesktopIconFilter*.dll
+src-tauri/desktop-icon-filter/Cargo.lock

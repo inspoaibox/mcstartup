@@ -1,0 +1,4 @@
+ai-edge-litert==2.1.5
+numpy
+opencv-python
+Pillow
